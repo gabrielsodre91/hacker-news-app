@@ -1,79 +1,103 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Hacker News Mobile App
 
-# Getting Started
+This is a React Native mobile application that fetches and displays articles from Hacker News, with functionalities for offline access, article management, and push notifications.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Table of Contents
 
-## Step 1: Start the Metro Server
+- [Features](#features)
+- [Setup Instructions](#setup-instructions)
+- [Running the Application](#running-the-application)
+- [Running Unit Tests](#running-unit-tests)
+- [Libraries Used](#libraries-used)
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Features
 
-To start Metro, run the following command from the _root_ of your React Native project:
+- **Data Fetching**: Fetches the latest articles from the Hacker News API filtered by mobile-related topics.
+- **Offline Access**: Articles are cached locally, allowing offline access.
+- **Article Management**: Swipe to delete articles from the list.
+- **Favorites**: Mark articles as favorites and access them from a separate screen.
+- **Push Notifications**: Receive notifications for new articles based on your preferences.
+- **Article Viewing**: View articles within the app using a built-in web view.
 
-```bash
-# using npm
-npm start
+## Setup Instructions
 
-# OR using Yarn
-yarn start
-```
+1. **Clone the Repository**:
 
-## Step 2: Start your Application
+    ```bash
+    git clone https://github.com/gabrielsodre91/hacker-news-app.git
+    cd HackerNewsApp
+    ```
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+2. **Install Dependencies**:
 
-### For Android
+    ```bash
+    yarn install
+    ```
 
-```bash
-# using npm
-npm run android
+3. **Install Pods for iOS**:
 
-# OR using Yarn
-yarn android
-```
+    Navigate to the `ios` directory and run:
 
-### For iOS
+    ```bash
+    cd ios
+    pod install
+    cd ..
+    ```
 
-```bash
-# using npm
-npm run ios
+4. **Run the Metro Bundler**:
 
-# OR using Yarn
-yarn ios
-```
+    ```bash
+    yarn start
+    ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+5. **Run the Application**:
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+    - **iOS**: 
+      ```bash
+      yarn ios
+      ```
+    - **Android**:
+      ```bash
+      yarn android
+      ```
 
-## Step 3: Modifying your App
+## Running Unit Tests
 
-Now that you have successfully run the app, let's modify it.
+This project includes unit tests using Jest and React Native Testing Library.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+1. **Run the Tests**:
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+    ```bash
+    yarn test
+    ```
 
-## Congratulations! :tada:
+2. **View Test Coverage**:
 
-You've successfully run and modified your React Native App. :partying_face:
+    ```bash
+    yarn test --coverage
+    ```
 
-### Now what?
+## Libraries Used
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+- [React Native](https://reactnative.dev/)
+- [React Navigation](https://reactnavigation.org/)
+- [Axios](https://axios-http.com/)
+- [@react-native-async-storage/async-storage](https://github.com/react-native-async-storage/async-storage)
+- [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/)
+- [React Native WebView](https://github.com/react-native-webview/react-native-webview)
+- [React Native Push Notification](https://github.com/zo0r/react-native-push-notification)
+- [Jest](https://jestjs.io/) & [React Native Testing Library](https://testing-library.com/docs/react-native-testing-library/intro/)
 
-# Troubleshooting
+## Future Improvements
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+- Implement user preferences for receiving push notifications only for specific topics (e.g., Android or iOS).
+- Add more robust error handling and user feedback.
+- Improve UI/UX and add animations for a smoother experience.
 
-# Learn More
+## Contributing
 
-To learn more about React Native, take a look at the following resources:
+Feel free to submit pull requests or raise issues to improve the project.
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## License
+
+This project is licensed under the MIT License.
