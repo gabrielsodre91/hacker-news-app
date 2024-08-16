@@ -1,118 +1,56 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
+import 'react-native-gesture-handler';
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import PushNotification from 'react-native-push-notification';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import ArticleListScreen from './src/screens/ArticleListScreen';
+import ArticleWebViewScreen from './src/screens/ArticleWebViewScreen';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Notification from './src/interfaces/notification';
+import Article from './src/interfaces/article';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+PushNotification.configure({
+  onNotification: function (notification: Notification) {
+    console.log("NOTIFICATION:", notification);
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+  requestPermissions: true,
 });
+
+const triggerNotification = (article: Article) => {
+  PushNotification.localNotification({
+    title: "New Article Available",
+    message: article.title || article.story_title,
+  });
+};
+
+const checkForNewArticles = async () => {
+  const response = await axios.get('https://hn.algolia.com/api/v1/search_by_date?query=mobile');
+  const articles = response.data.hits;
+
+  const latestArticle = articles[0];
+  const savedArticles = await AsyncStorage.getItem('articles');
+  const savedArticlesParsed = savedArticles ? JSON.parse(savedArticles) : [];
+
+  if (!savedArticlesParsed.some((article: Article) => article.objectID === latestArticle.objectID)) {
+    triggerNotification(latestArticle);
+    await AsyncStorage.setItem('articles', JSON.stringify(articles));
+  }
+};
+
+setInterval(checkForNewArticles, 300000);
+
+const Stack = createStackNavigator();
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Articles">
+        <Stack.Screen name="Articles" component={ArticleListScreen} />
+        <Stack.Screen name="ArticleWebView" component={ArticleWebViewScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default App;
