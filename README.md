@@ -6,9 +6,9 @@ This is a React Native mobile application that fetches and displays articles fro
 
 - [Features](#features)
 - [Setup Instructions](#setup-instructions)
-- [Running the Application](#running-the-application)
 - [Running Unit Tests](#running-unit-tests)
 - [Libraries Used](#libraries-used)
+- [Screenshots](#screenshots)
 
 ## Features
 
@@ -88,16 +88,9 @@ This project includes unit tests using Jest and React Native Testing Library.
 - [React Native Push Notification](https://github.com/zo0r/react-native-push-notification)
 - [Jest](https://jestjs.io/) & [React Native Testing Library](https://testing-library.com/docs/react-native-testing-library/intro/)
 
-## Future Improvements
+## Screenshots
+![image](https://github.com/user-attachments/assets/5f7950f1-89db-468f-8fe9-b8f47ebac98f)
 
-- Implement user preferences for receiving push notifications only for specific topics (e.g., Android or iOS).
-- Add more robust error handling and user feedback.
-- Improve UI/UX and add animations for a smoother experience.
+![image](https://github.com/user-attachments/assets/df70ccdf-cb24-4ada-873c-469f3b24f61f)
 
-## Contributing
-
-Feel free to submit pull requests or raise issues to improve the project.
-
-## License
-
-This project is licensed under the MIT License.
+![image](https://github.com/user-attachments/assets/bf68e3f7-f3d6-4d62-83c4-c271ab87a5d3)
